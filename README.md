@@ -2,19 +2,41 @@
 
 从 MathModel desktop 0.0.21 安装包里提取的 10 个数模技能（原始 12 个中的 10 个，另 2 个见 `_parked/`），按 Codex 官方插件规范封装（`.codex-plugin/plugin.json` + `"skills": "./skills/"`），并新增一个端到端总编排技能，共 **11 个技能**。
 
-## 安装
+## 在其他设备安装
 
-先把仓库克隆（或解压）到任意本地目录，下文用 `<repo-root>` 指代该目录，例如 `C:\Users\you\codex-mathmodel-marketplace`。
+### 前置条件
 
-**方式一（推荐，官方对非默认 marketplace 的做法）**：
+| 需要 | 说明 |
+|---|---|
+| Codex（桌面版或 CLI） | 需带 `plugin` 子命令（本插件在 `codex-cli 0.155.1` 上验证通过） |
+| git | 用于克隆本仓库 |
+| 仓库读取权限 | **本仓库是私有的**：先 `gh auth login`，或让仓库所有者加你为 collaborator，或 fork 后自行决定可见性 |
 
-```powershell
-codex plugin marketplace add "<repo-root>"
+### 安装步骤
+
+```bash
+# 1. 克隆到任意本地目录（下文用 <repo-root> 指代该目录）
+git clone https://github.com/2145602879/codex-mathmodel-paper.git
+cd codex-mathmodel-paper
+# 没有 gh 时可用 PAT：
+# git clone https://<your-token>@github.com/2145602879/codex-mathmodel-paper.git
+
+# 2. 把该目录注册为 marketplace（市场名 mathmodel-local 来自目录内的 .agents/plugins/marketplace.json）
+codex plugin marketplace add "$PWD"
+#   PowerShell 同样写法：codex plugin marketplace add "$PWD"
+
+# 3. 安装并启用插件
+codex plugin add "mathmodel-paper@mathmodel-local"
+
+# 4. 确认状态（应显示 installed, enabled）
+codex plugin list
 ```
 
-之后在 Codex UI 里安装 `mathmodel-paper`，**新开一个线程**即可使用（插件技能在新线程才会被拾取）。
+**第 5 步：新开一个线程**（或重启 Codex）。插件的技能**只在新会话里被拾取**，之后直接说「用国赛模板开始一篇数模论文」即可触发总编排。
 
-**方式二（等价，手工注册）**：在 `~/.codex/config.toml` 追加（Windows 路径要用单引号）：
+### 也可以手工注册
+
+跳过第 2 步，在 `~/.codex/config.toml`（Windows：`C:\Users\<you>\.codex\config.toml`）追加（Windows 路径用单引号）：
 
 ```toml
 [marketplaces.mathmodel-local]
@@ -23,6 +45,20 @@ source = '<repo-root>'
 
 [plugins."mathmodel-paper@mathmodel-local"]
 enabled = true
+```
+
+### 更新与卸载
+
+Codex 会把插件**拷贝进缓存**（`~/.codex/plugins/cache/mathmodel-local/mathmodel-paper/<version>/`），所以 `git pull` 之后**必须重新执行 `codex plugin add`** 才会生效：
+
+```bash
+git pull
+codex plugin add "mathmodel-paper@mathmodel-local"    # 重新拷贝到缓存
+```
+
+```bash
+codex plugin remove "mathmodel-paper@mathmodel-local"   # 卸载插件
+codex plugin marketplace remove mathmodel-local         # 移除 marketplace 注册
 ```
 
 ## 校验
@@ -89,6 +125,6 @@ git commit -m "更新说明"
 git push
 ```
 
-换台机器用：`git clone <repo-url>` 后按上面「安装」一节注册 marketplace 即可（私有仓库需先 `gh auth login`）。
+换台机器：见上面「**在其他设备安装**」一节（克隆 → `codex plugin marketplace add` → `codex plugin add` → 新开线程）。注意本机改完推送后，**本机也要重新执行 `codex plugin add`** 才会刷新缓存。
 
 > 仓库含约 90 MB 商业字体，**建议保持私有**；若要公开，请先删除 `plugins/mathmodel-paper/skills/mma-paper/assets/template/*/` 下的商业字体文件（`.gitignore` 中已预置排除规则，保留 `UbuntuMono-*`、`Fira Code`、`MONACO` 等开源字体）。
