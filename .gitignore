@@ -1,0 +1,36 @@
+# ===== OS / 编辑器垃圾 =====
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+*~
+.idea/
+.vscode/
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# ===== LaTeX 中间产物 =====
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# ===== 若要转为公开仓库：取消下面注释以排除商业字体 =====
+# （中易 / 方正版权，公开再分发有侵权风险；详见 NOTICE.md）
+# plugins/mathmodel-paper/skills/mma-paper/assets/template/*/simsun.ttc
+# plugins/mathmodel-paper/skills/mma-paper/assets/template/*/SimSun.ttf
+# plugins/mathmodel-paper/skills/mma-paper/assets/template/*/SimHei.ttf
+# plugins/mathmodel-paper/skills/mma-paper/assets/template/*/simkai.ttf
+# plugins/mathmodel-paper/skills/mma-paper/assets/template/*/KaiTi.ttf
+# plugins/mathmodel-paper/skills/mma-paper/assets/template/*/LiSu.ttf
+# plugins/mathmodel-paper/skills/mma-paper/assets/template/*/fsGB2312.ttf
+# plugins/mathmodel-paper/skills/mma-paper/assets/template/*/fzxbsongti.TTF
