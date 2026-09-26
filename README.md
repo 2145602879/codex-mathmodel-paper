@@ -9,19 +9,31 @@
 | 需要 | 说明 |
 |---|---|
 | Codex（桌面版或 CLI） | 需带 `plugin` 子命令（本插件在 `codex-cli 0.155.1` 上验证通过） |
-| git | 用于克隆本仓库 |
-| 仓库读取权限 | **本仓库是私有的**：先 `gh auth login`，或让仓库所有者加你为 collaborator，或 fork 后自行决定可见性 |
+| 获取本仓库 | 两条路：**① git 克隆**（需仓库读取权限）或 **② 离线 zip**（无需 git、无需账号） |
+| （仅路线 ①）仓库读取权限 | **本仓库是私有的**：先 `gh auth login`，或让仓库所有者加你为 collaborator，或 fork 后自行决定可见性 |
 
 ### 安装步骤
 
+**第 1 步：把仓库弄到本地。** 下文用 `<repo-root>` 指代那个目录，即**包含 `.agents/` 与 `plugins/` 的那一层**。
+
 ```bash
-# 1. 克隆到任意本地目录（下文用 <repo-root> 指代该目录）
+# 路线 ①：git 克隆
 git clone https://github.com/2145602879/codex-mathmodel-paper.git
 cd codex-mathmodel-paper
 # 没有 gh 时可用 PAT：
 # git clone https://<your-token>@github.com/2145602879/codex-mathmodel-paper.git
+```
 
-# 2. 把该目录注册为 marketplace（市场名 mathmodel-local 来自目录内的 .agents/plugins/marketplace.json）
+```text
+路线 ②：离线 zip
+把收到的 codex-mathmodel-marketplace-1.0.0.zip 解压到任意目录，
+该目录就是 <repo-root>（解压后应能看到 .agents\、plugins\、README.md）。
+```
+
+**第 2~4 步**（在 `<repo-root>` 目录下执行）：
+
+```bash
+# 2. 注册为 marketplace（市场名 mathmodel-local 来自目录内的 .agents/plugins/marketplace.json）
 codex plugin marketplace add "$PWD"
 #   PowerShell 同样写法：codex plugin marketplace add "$PWD"
 
