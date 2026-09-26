@@ -55,6 +55,41 @@ codex plugin add mathmodel-paper@mathmodel-local
 
 > Windows 的 PowerShell 用法完全相同。若提示找不到 `codex`，说明还没装 Codex CLI/桌面版。
 
+<details>
+<summary><b>不会命令行？「在解压出来的文件夹里执行命令」这样做（点开）</b></summary>
+
+命令里的 `.` 意思是"**当前所在的文件夹**"，所以要先让终端站到解压出来的那个文件夹里。
+
+**做法 A：直接在文件夹里打开终端（最省事）**
+
+1. 用文件资源管理器打开解压出来的文件夹 —— 里面应该能看到 `plugins` 文件夹和 `README.md`
+2. 点一下窗口**顶部的地址栏**（显示路径的那一行），把内容清空，输入 `cmd`，按回车
+3. 弹出的黑窗口就已经"站"在这个文件夹里了
+4. 粘贴下面两条命令，每条按一次回车：
+
+   ```bash
+   codex plugin marketplace add .
+   codex plugin add mathmodel-paper@mathmodel-local
+   ```
+
+**做法 B：先开终端，再切进去**
+
+1. 按 `Win + R`，输入 `cmd`，回车
+2. 输入 `cd /d "你解压出来的完整路径"`，回车（`/d` 是为了能跨盘符切换，例如 `cd /d "D:\codex-mathmodel"`）
+3. 再执行上面那两条命令
+
+**怎么确认站对地方了**：输入 `dir` 回车，能看到 `plugins`、`README.md` 就对了。
+
+**怎么粘贴**：Windows 终端里**直接点右键**即可粘贴（或 `Ctrl+Shift+V`）。
+
+**如果提示找不到 `codex`**：说明 Codex CLI 不在 PATH。装一个：`npm i -g @openai/codex`（需要 Node.js），或把 Codex 的安装目录加进环境变量 PATH。
+
+**如果解压后多套了一层文件夹**（例如变成 `codex-mathmodel-marketplace-1.0.2\codex-mathmodel-marketplace\`），要 `cd` 进**真正含 `.agents` 与 `plugins` 的那一层**；最省事的办法是解压时选"解压到当前文件夹"。
+
+**macOS / Linux**：打开"终端"，输入 `cd `（注意末尾空格），把文件夹拖进终端窗口自动补全路径，回车，然后执行同样两条命令。
+
+</details>
+
 **第 3 步 · 重启 Codex，新开一个对话**，然后说：
 
 > 用国赛模板开始一篇数模论文
@@ -152,6 +187,13 @@ codex plugin list                                    # 应显示 installed, enab
 codex plugin remove mathmodel-paper@mathmodel-local  # 卸载插件
 codex plugin marketplace remove mathmodel-local      # 移除市场注册
 ```
+
+</details>
+
+<details>
+<summary><b>提示找不到 .agents / 不是一个插件市场</b></summary>
+
+你多半不在正确的那一层目录。`cd` 进**含 `.agents` 与 `plugins` 的那个文件夹**再试。若解压后多套了一层（`xxx\xxx\`），解压时选"解压到当前文件夹"即可避免。
 
 </details>
 
