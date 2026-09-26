@@ -6,8 +6,8 @@
 
 | 项 | 值 |
 |---|---|
-| 来源应用 | MathModel desktop（数模 Agent），版本 `0.0.21` |
-| 官方安装包 | `mathmodel-0.0.21-x64.exe`（NSIS-3 Unicode / Deflate，314.6 MB） |
+| 来源应用 | MathModel desktop（数模 Agent），版本 `0.0.22`（0.0.21 亦已解包核对） |
+| 官方安装包 | `mathmodel-0.0.22-x64.exe`（NSIS-3 Unicode / Deflate，316.3 MB）；0.0.21 为 314.6 MB，两版均已解包核对 |
 | 解包链 | NSIS → `$PLUGINSDIR\app-64.7z`（LZMA2+BCJ2）→ `resources\builtin-skills\` |
 | 工具 | 7-Zip 22.01（读取 NSIS 容器） |
 | 提取范围 | `resources\builtin-skills\` 下 12 个技能中的 10 个（另 2 个停放于 `_parked/`：`skill-creator`、`paper-sharing`）；其中 `nature-figure` 以 `nature-figure-mma` 之名打包，以免与宿主机同名技能冲突 |

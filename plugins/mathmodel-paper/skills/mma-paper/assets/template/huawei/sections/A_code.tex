@@ -1,7 +1,11 @@
 \section{核心代码}
 % 写作提示：附录应放与正文一致、完整可运行且能复现关键结果的真实代码，并说明环境、依赖、输入和输出。
 % 下方代码仅为 listings 排版示例；正式论文应替换为实际程序，较长代码可用 \lstinputlisting 引入文件。
-\begin{lstlisting}[language=Python]
+% 如实际使用 AI 辅助编程，须在程序文件开头保留并如实填写来源注释；未使用则删除示例注释。
+\begin{Python}{核心求解程序}
+# 本程序及代码是在人工智能工具辅助下完成的。
+# 工具名称：[实际使用的工具]；版本/型号：[版本]
+# 开发机构/公司：[机构]；版本发布日期：[YYYY-MM-DD]
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
@@ -16,4 +20,4 @@ X_train, X_test, y_train, y_test = train_test_split(
 model = RandomForestRegressor(n_estimators=100, random_state=42)
 model.fit(X_train, y_train)
 print(f'R2: {r2_score(y_test, model.predict(X_test)):.4f}')
-\end{lstlisting}
+\end{Python}

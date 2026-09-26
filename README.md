@@ -1,6 +1,6 @@
 # MathModel Paper Suite — 本地 Codex 插件
 
-从 MathModel desktop 0.0.21 安装包里提取的 10 个数模技能（原始 12 个中的 10 个，另 2 个见 `_parked/`），按 Codex 官方插件规范封装（`.codex-plugin/plugin.json` + `"skills": "./skills/"`），并新增一个端到端总编排技能，共 **11 个技能**。
+从 MathModel desktop 0.0.22 安装包里提取的 10 个数模技能（原始 12 个中的 10 个，另 2 个见 `_parked/`），按 Codex 官方插件规范封装（`.codex-plugin/plugin.json` + `"skills": "./skills/"`），并新增一个端到端总编排技能，共 **11 个技能**。
 
 ## 在其他设备安装
 
@@ -26,7 +26,7 @@ cd codex-mathmodel-paper
 
 ```text
 路线 ②：离线 zip
-把收到的 codex-mathmodel-marketplace-1.0.0.zip 解压到任意目录，
+把收到的 codex-mathmodel-marketplace-1.0.1.zip 解压到任意目录，
 该目录就是 <repo-root>（解压后应能看到 .agents\、plugins\、README.md）。
 ```
 
@@ -140,3 +140,17 @@ git push
 换台机器：见上面「**在其他设备安装**」一节（克隆 → `codex plugin marketplace add` → `codex plugin add` → 新开线程）。注意本机改完推送后，**本机也要重新执行 `codex plugin add`** 才会刷新缓存。
 
 > 仓库含约 90 MB 商业字体，**建议保持私有**；若要公开，请先删除 `plugins/mathmodel-paper/skills/mma-paper/assets/template/*/` 下的商业字体文件（`.gitignore` 中已预置排除规则，保留 `UbuntuMono-*`、`Fira Code`、`MONACO` 等开源字体）。
+## 更新记录
+
+### v1.0.1 — 同步 MathModel 0.0.22
+
+- 同步 `mma-paper/assets/template/huawei/`（华为杯模板）6 个文件：`gmcmthesis.cls`、`logo.pdf`、`title.pdf`、`main.tex`、`sections/A_code.tex`、`template.json`
+- 两版差异**仅**在华为杯模板：658 个文件中其余 652 个字节级完全相同，`claude.exe`（284,981,920 字节）亦未变
+- 变动性质：厂商重做该模板 —— 抬头改为 `2026/09/22 MathModel Huawei Cup 2026`、`cs4size`→`zihao=-4`、行距 1.38→1、字体改为 `\IfFontExistsTF{...}` 可降级（缺 Times/Courier/Arial/Consolas 时回退 TeX Gyre/Latin Modern）、封面标签改用随附隶书 `LiSu.ttf`、封面页码与 PDF 锚点修正、`logo.pdf` 重新导出（407 KB→113 KB）
+- 写入 **2026 竞赛规则要求**：摘要不超过两页、无需英文摘要；使用 AI 须声明工具名称/版本/机构/发布日期（`A_code.tex` 改用模板自带 `Python` 环境并要求程序开头保留声明）
+
+### v1.0.0 — 首次发布
+
+- 从 MathModel desktop 0.0.21 提取 10 个技能，另新增 `mathmodel-paper-workflow` 总编排，共 **11 个技能**
+- 去 Claude 化改造：移除 `allowed-tools`；`AskUserQuestion` → 普通文本提问；`browser_*` / `mcp__mathmodel-*` → Codex Browser 插件；`/skill` 斜杠调用 → 技能名调用
+- `nature-figure` 改名 `nature-figure-mma`，避免与宿主机同名技能冲突（宿主机有则优先用宿主机的）

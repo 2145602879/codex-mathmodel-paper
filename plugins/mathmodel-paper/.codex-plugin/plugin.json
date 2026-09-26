@@ -1,6 +1,6 @@
 {
   "name": "mathmodel-paper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "End-to-end mathematical-modeling competition paper workflow: 14 contest LaTeX templates, 90+ reproducible figure templates, editable draw.io diagrams, real-DOI BibTeX, public-data sourcing, and judge-style review.",
   "author": {
     "name": "Extracted from MathModel desktop 0.0.21"

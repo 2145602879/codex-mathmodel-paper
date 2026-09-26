@@ -1,6 +1,6 @@
 # _parked —— 提取出来但未打包的技能
 
-从 MathModel desktop 0.0.21 安装包提取的 12 个技能中，10 个已打包进 `../plugins/mathmodel-paper/`（含改名后的 `nature-figure-mma`），剩这两个停放在此：
+从 MathModel desktop 0.0.22 安装包提取的 12 个技能中，10 个已打包进 `../plugins/mathmodel-paper/`（含改名后的 `nature-figure-mma`），剩这两个停放在此：
 
 | 技能 | 体积 | 停放原因 | 想启用怎么办 |
 |---|---|---|---|
@@ -12,4 +12,4 @@
 > 它与宿主机 `~/.codex/skills/nature-figure` 那份**不是同一版本**（本机那份 126 文件 / 33.5 MB，这份 100 文件 / 29.3 MB），
 > 因此不是冗余备份而是两个不同构建：宿主机有则优先用宿主机的，没有则用插件里这份兜底。
 
-原安装包仍在 `D:\downloads\mathmodel-0.0.21-x64.exe`，任何时候都能重新解包（解包链见 `../plugins/mathmodel-paper/INVENTORY.md`）。
+安装包（0.0.21 在 `D:\downloads\mathmodel-0.0.21-x64.exe`，0.0.22 见 DSH 附件目录）任何时候都能重新解包（解包链见 `../plugins/mathmodel-paper/INVENTORY.md`）。

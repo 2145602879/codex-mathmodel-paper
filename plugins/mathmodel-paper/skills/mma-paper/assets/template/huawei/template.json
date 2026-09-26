@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "name": { "zh-CN": "华为杯", "en": "Huawei Cup" },
   "description": {
-    "zh-CN": "中国研究生数学建模竞赛论文模板",
-    "en": "China Postgraduate Mathematical Contest in Modeling"
+    "zh-CN": "2026 年第二十三届中国研究生数学建模竞赛论文模板",
+    "en": "2026 · 23rd China Postgraduate Mathematical Contest in Modeling"
   },
   "language": "zh-CN",
   "entryFile": "main.tex",

@@ -6,7 +6,7 @@
 
 | 项 | 值 |
 |---|---|
-| 安装包 | `D:\downloads\mathmodel-0.0.21-x64.exe`（314.6 MB） |
+| 安装包 | `mathmodel-0.0.22-x64.exe`（316.3 MB）；0.0.21 为 314.6 MB，两版均已核对 |
 | 包格式 | NSIS-3 Unicode，Deflate |
 | 解包链 | NSIS → `$PLUGINSDIR\app-64.7z`（329 MB，LZMA2+BCJ2）→ `resources\builtin-skills\` |
 | 使用工具 | NVIDIA App 自带的完整 7-Zip 22.01（`C:\Program Files\NVIDIA Corporation\NVIDIA App\7z.exe`，带 `7z.dll`，支持 NSIS） |

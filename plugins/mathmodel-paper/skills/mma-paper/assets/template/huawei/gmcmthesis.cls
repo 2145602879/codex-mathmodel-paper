@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{gmcmthesis}
-              [2018/09/11 v2.3 update  gmcmthesis by  latexstudio.net]
+              [2026/09/22 MathModel Huawei Cup 2026]
 %% Inital Code
 \newif\if@gmcm@bwprint\@gmcm@bwprintfalse
 \newif\if@gmcm@preface\@gmcm@prefacetrue
@@ -28,7 +28,7 @@
 \ExecuteOptions{colorprint}
 \ProcessOptions\relax
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Loading Class
-\LoadClass[a4paper,cs4size]{ctexart}
+\LoadClass[a4paper,zihao=-4]{ctexart}
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Loading Package
 \RequirePackage{ifxetex}
 \RequireXeTeX
@@ -90,11 +90,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 \lstnewenvironment{Matlab}[1]{
 \lstset{language=matlab,               % choose the language of the code
-  xleftmargin=20pt,
-  xrightmargin=20pt,
+  xleftmargin=10pt,
+  xrightmargin=10pt,
   frame=tlbr,framesep=4pt,framerule=0.5pt, % sets the frame style
   %frame=shadowbox,rulesepcolor=\color{red!20!green!20!blue!20},
-  basicstyle=\small\fontspec{Courier New},
+  basicstyle=\small\ttfamily\linespread{1}\selectfont,
   keywordstyle={\color{mKeyword}},     % sets color for keywords
   stringstyle={\color{mString}},       % sets color for strings
   commentstyle={\color{mComment}},     % sets color for comments
@@ -113,12 +113,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 \lstnewenvironment{Python}[1]{
 \lstset{language=python,               % choose the language of the code
-  xleftmargin=20pt,
-  xrightmargin=20pt,
+  xleftmargin=10pt,
+  xrightmargin=10pt,
   frame=single,framesep=4pt,framerule=0.5pt, % sets the frame style
   %frame=shadowbox,rulesepcolor=\color{red!20!green!20!blue!20},
-  basicstyle=\small\ttfamily,          % sets font style for the code
-  %basicstyle=\footnotesize\fontspec{Consolas},
+  basicstyle=\small\gmcm@pythonfont\linespread{1}\selectfont,
   keywordstyle=\color{pKeyword},       % sets color for keywords
   stringstyle=\color{pString},         % sets color for strings
   commentstyle=\color{pComment},       % sets color for comments
@@ -126,7 +125,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   rulecolor=\color{gray!50},
   title=#1,                            % \lstnames how the filename of files
   emph={format_string,eff_ana_bf,permute,eff_ana_btr},
-  emphstyle=\color{pIdentifier}
+  emphstyle=\color{pIdentifier},
   showspaces=false,                    % show spaces adding particular underscores
   showstringspaces=false,              % underline spaces within strings
   showtabs=false,                      % show tabs within strings adding particular underscores
@@ -165,16 +164,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % 页面布局
 \geometry{top=30.0mm,bottom=25.0mm,left=22.5mm,right=22.5mm,headsep=8mm}
 % \geometry{top=30.0mm,bottom=25.0mm,left=31.7mm,right=31.7mm,headsep=8mm}
-\renewcommand*{\baselinestretch}{1.38}
-% \renewcommand*{\baselinestretch}{1}
-% 修改tabular 环境, 设置表格中的行间距为正文行间距.
-\let\gmcm@oldtabular\tabular
-\let\gmcm@endoldtabular\endtabular
-\renewenvironment{tabular}%
-	{\bgroup%
-	\renewcommand{\arraystretch}{1.38}%
-	\gmcm@oldtabular}%
-	{\gmcm@endoldtabular\egroup}
+\renewcommand*{\baselinestretch}{1}
 % 每行缩进两个汉字
 \setlength\parindent{2em}
 
@@ -206,11 +196,16 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 三 设置字体
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\setmainfont{Times New Roman}
-\setmonofont{Courier New}
-\setsansfont{Arial}
+\IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{\setmainfont{TeX Gyre Termes}}
+\IfFontExistsTF{Courier New}{\setmonofont{Courier New}}{\setmonofont{Latin Modern Mono}}
+\IfFontExistsTF{Arial}{\setsansfont{Arial}}{\setsansfont{TeX Gyre Heros}}
+\IfFontExistsTF{Consolas}{\newfontfamily\gmcm@pythonfont{Consolas}}{%
+  \newcommand\gmcm@pythonfont{\ttfamily}}
 
 % 中文正文、粗体与宋楷黑字体族由 ctex 按平台选择，勿覆盖为 macOS 专用字体。
+% 摘要页的固定标签使用隶书；模板随附字体，避免依赖系统安装。
+\setCJKfamilyfont{gmcm-cover-label}[Path=./]{LiSu.ttf}
+\newcommand\gmcm@coverfont{\CJKfamily{gmcm-cover-label}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -222,13 +217,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \captionsetup[figure]{%
 	format=hang,   % 标题从第二行开始都有缩进, 应该和 justification=raggedright 的效果一样.
 	labelsep=quad, % 分隔符是一个空格
-	font={song,minusfour,bf}, % 图的字体, 宋体小四
+	font={song,minusfour}, % 图的字体, 宋体小四
 	position=bottom % position=bottom, 不代表标题放在下面, 标题仍放在你放\caption的位置.
 }
 \captionsetup[table]{%
 	format=hang,   % 标题从第二行开始都有缩进, 应该和 justification=raggedright 的效果一样.
 	labelsep=quad, % 分隔符是一个空格
-	font={song,minusfour,bf}, % 表的字体, 宋体小四
+	font={song,minusfour}, % 表的字体, 宋体小四
 	position=top % position=bottom, 不代表标题放在下面, 标题仍放在你放\caption的位置.
 }
 % 列表环境设置
@@ -247,8 +242,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % \AtBeginDocument{%
 	 \hypersetup{%
 		% % unicode=false, % hyperref 和 xetex 同时使用时不能开启 Unicode 选项.
-		 hyperfootnotes=true,
-		 hyperindex=true,
 		 colorlinks=true,
 		 bookmarksnumbered=true,
 		 bookmarksopen=true,
@@ -298,14 +291,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }
 \def\ge@maketitle{%
   \clearpage
-  \thispagestyle{plain}%
-  \pdfbookmark[1]{封~面}{cover}
   \if@gmcm@preface
-  \setcounter{page}{0}
-  \def\thepage{0}
+  \thispagestyle{empty}%
+  \setcounter{page}{0}% 封面不显示页码，并避免与摘要 page.1 的 PDF 锚点重复。
+  \pdfbookmark[1]{封~面}{cover}
 
  \begin{center}
- {\includegraphics{logo}}
+ {\includegraphics[width=\textwidth]{logo}}
 
   \vskip1.5cm
  {\zihao{2} \gmcm@ges@string@contents \par}
@@ -328,6 +320,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
                         &\zihao{-2}\bfseries 3.  \gmcm@tokens@memberc\hfill\null\\
    \Xhline{1.2pt}
   \end{tabularx}
+  \clearpage
+  \fi
 
 	\makenametitle
 	}
@@ -336,7 +330,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \clearpage
 \thispagestyle{plain}%
 \pdfbookmark[1]{标~题}{title}
-\setcounter{page}{1}
+\pagenumbering{arabic}
 \begin{center}
 %{\includegraphics[width=4cm]{logo}}
 {\zihao{2} \gmcm@ges@string@contents \par}
@@ -345,7 +339,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \vskip0.6cm%
 
 \begin{center}\begin{tabularx}{.95\textwidth}{@{}lX@{}}
-{\zihao{4} 题\qquad 目} &\hfill\zihao{3}\heiti \@title\hfill\null\\
+{\zihao{-2}\gmcm@coverfont 题\quad 目：} &\centering\arraybackslash\zihao{3}\heiti \@title\\
 \cline{2-2}
 \end{tabularx}
 \end{center}
@@ -358,13 +352,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \def\@seccntformat#1{\csname the#1\endcsname\ \ }
 % 节标题格式, 居中, 使用\chinese命令修改计数器, \kern 使得数字和内容不至于太远
 \newcommand{\thinskip}{\hskip 0.05em\relax}
- \renewcommand\thesection{\arabic{section}\thinskip.}
-\renewcommand\thesubsection{\arabic{section}\thinskip.\thinskip\arabic{subsection}}
-\renewcommand\thesubsubsection{\thesubsection\thinskip.\thinskip\arabic{subsubsection}}
+\renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsection{\thesection.\arabic{subsection}}
+\renewcommand\thesubsubsection{\thesubsection.\arabic{subsubsection}}
 \renewcommand\section{\@startsection{section}{1}{\z@}%
  	{2.5ex \@plus -1ex \@minus -.2ex}%
 	{2.3ex \@plus.2ex}%
-	{\bfseries\centering\zihao{4}\heiti}}
+	{\centering\zihao{4}\heiti}}
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
 	{1.25ex\@plus -1ex \@minus -.2ex}%
 	{1.25ex \@plus .2ex}%
@@ -384,18 +378,18 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %%%%%%%%%%%%%%%%%%%%%%%%
 % 摘要
 %%%%%%%%%%%%%%%%%%%%%%%%
-%% 摘要两个字设置为 4 号.
+%% 摘要页的固定标签使用隶书小二号.
 %% 定义摘要环境
 \renewenvironment{abstract}{%
 \if@twocolumn
 		\section*{\gmcm@cap@abstractname}%
 	\else
 	 \begin{center}%
-	{\zihao{3}\songti\gmcm@cap@abstractname\vspace{\z@}}%
+	{\zihao{-2}\gmcm@coverfont\gmcm@cap@abstractname\vspace{\z@}}%
 	 \end{center}%
  	 \quotation
 	\fi}
-	{\if@twocolumn\else\endquotation\newpage\null\fi}
+	{\if@twocolumn\else\endquotation\fi\clearpage}
 \renewenvironment{quotation}
 	{\list{}{\listparindent 2em%
 	 \itemindent \listparindent
@@ -409,7 +403,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 	\renewcommand{\gmcm@tokens@keywords}{#1}
 	\par
 	\vskip1ex
-	{\noindent\zihao{-4}\heiti\gmcm@cap@keywordsname：}~{\gmcm@tokens@keywords}
+	{\noindent\zihao{-2}\gmcm@coverfont\gmcm@cap@keywordsname：}~{\gmcm@tokens@keywords}
 	}
 
 
@@ -432,7 +426,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % -----------
 
   %%%  中文标题名称
- \newcommand*{\gmcm@cap@abstractname}{摘\qquad\quad 要： }
+ \newcommand*{\gmcm@cap@abstractname}{摘\quad 要：}
   %%%  中文关键字
  \newcommand*{\gmcm@cap@keywordsname}{关键词}
  
@@ -452,7 +446,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
  \setlength{\cftbeforesecskip}{7pt}
  \setlength{\cftbeforesubsecskip}{3pt}
  %\setlength{\cftbeforesubsecskip}{5pt}
- \renewcommand{\cftsecfont}{\bfseries\zihao{-4}\heiti}
+ \renewcommand{\cftsecfont}{\zihao{-4}\heiti}
  \renewcommand{\cftsecleader}{\cftdotfill{\cftsecdotsep}}
  \renewcommand{\cftsecaftersnumb}{\hskip.4em}
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -482,7 +476,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 %%设置目录格式
 % 节的目录格式
-\titlecontents{section}[0pt]{\vspace{2mm}\bfseries\heiti}
+\titlecontents{section}[0pt]{\vspace{2mm}\heiti}
 {\thecontentslabel\hskip.5em}{}{\titlerule*[0.5pc]{.}\contentspage}
 % 小节的目录格式
 \titlecontents{subsection}[30pt]{\songti}
