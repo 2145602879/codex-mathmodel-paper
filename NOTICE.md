@@ -10,7 +10,7 @@
 | 官方安装包 | `mathmodel-0.0.21-x64.exe`（NSIS-3 Unicode / Deflate，314.6 MB） |
 | 解包链 | NSIS → `$PLUGINSDIR\app-64.7z`（LZMA2+BCJ2）→ `resources\builtin-skills\` |
 | 工具 | 7-Zip 22.01（读取 NSIS 容器） |
-| 提取范围 | `resources\builtin-skills\` 下 12 个技能中的 9 个（另 3 个见 `_parked/`） |
+| 提取范围 | `resources\builtin-skills\` 下 12 个技能中的 10 个（另 2 个停放于 `_parked/`：`skill-creator`、`paper-sharing`）；其中 `nature-figure` 以 `nature-figure-mma` 之名打包，以免与宿主机同名技能冲突 |
 | 一致性验证 | 提取结果与 App 运行时 seed 到 `%APPDATA%\@mathmodel\desktop\skills-plugin\skills\` 的副本，在体积与文件数上逐项一致 |
 
 本仓库**新增**的部分（可视为原创）：`plugins/mathmodel-paper/.codex-plugin/plugin.json`、`.agents/plugins/marketplace.json`、`plugins/mathmodel-paper/skills/mathmodel-paper-workflow/`、各 `README.md`、本文件。**改造**的部分：对原技能做了宿主去专有化（移除 `allowed-tools`、替换 `AskUserQuestion`/`browser_*`/`mcp__mathmodel-*` 等宿主工具引用），改动细节见 `README.md` 的改造对照表。
@@ -20,7 +20,7 @@
 | 技能 | 目录内 LICENSE | 状态 |
 |---|---|---|
 | `paper-diagram` | LICENSE.txt（Apache-2.0） | 可依 Apache-2.0 使用 |
-| `nature-figure`（见 `_parked/`） | LICENSE.txt（Apache-2.0） | 可依 Apache-2.0 使用 |
+| `nature-figure-mma`（原 `nature-figure`，已打包） | LICENSE.txt（Apache-2.0） | 可依 Apache-2.0 使用 |
 | `skill-creator`（见 `_parked/`） | LICENSE.txt（Apache-2.0） | 可依 Apache-2.0 使用 |
 | `mma-paper`、`mathmodel-figure-templates`、`data-search`、`doctor`、`mma-figure`、`mma-review`、`metaheuristic-optimization`、`paper-search`、`paper-sharing` | **无** | 按著作权法默认「保留所有权利」，本仓库**未获得**任何再许可授权 |
 
