@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-label="MathModel Paper Suite">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0A1020"/>
+      <stop offset="0.55" stop-color="#101B33"/>
+      <stop offset="1" stop-color="#1B2748"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4C8DFF"/>
+      <stop offset="0.6" stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#22D3A6"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#22D3A6" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#4C8DFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="320" fill="url(#bg)"/>
+
+  <!-- 背景网格 -->
+  <g stroke="#FFFFFF" stroke-opacity="0.045" stroke-width="1">
+    <path d="M0 40H1280M0 80H1280M0 120H1280M0 160H1280M0 200H1280M0 240H1280M0 280H1280"/>
+    <path d="M80 0V320M240 0V320M400 0V320M560 0V320M720 0V320M880 0V320M1040 0V320M1200 0V320"/>
+  </g>
+
+  <!-- 面积与曲线：寓意"配图" -->
+  <path d="M0 250 C180 250 230 148 400 148 C560 148 620 232 800 232 C980 232 1050 96 1280 96 L1280 320 L0 320 Z"
+        fill="url(#fade)"/>
+  <path d="M0 250 C180 250 230 148 400 148 C560 148 620 232 800 232 C980 232 1050 96 1280 96"
+        fill="none" stroke="url(#accent)" stroke-width="3.5" stroke-linecap="round"/>
+
+  <!-- 散点 -->
+  <g fill="#8AB4FF" fill-opacity="0.85">
+    <circle cx="400" cy="148" r="5"/>
+    <circle cx="800" cy="232" r="5"/>
+    <circle cx="1090" cy="86" r="4"/>
+    <circle cx="210" cy="214" r="4"/>
+    <circle cx="620" cy="196" r="4"/>
+  </g>
+
+  <!-- 柱状点缀 -->
+  <g fill="#22D3A6" fill-opacity="0.30">
+    <rect x="1150" y="214" width="18" height="66" rx="4"/>
+    <rect x="1178" y="186" width="18" height="94" rx="4"/>
+    <rect x="1206" y="158" width="18" height="122" rx="4"/>
+  </g>
+
+  <!-- 文字 -->
+  <text x="80" y="132" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif"
+        font-size="56" font-weight="700" fill="#FFFFFF" letter-spacing="0.5">MathModel Paper Suite</text>
+  <text x="80" y="180" font-family="Segoe UI, PingFang SC, Microsoft YaHei, Helvetica, Arial, sans-serif"
+        font-size="23" fill="#A9BEDC">数学建模竞赛论文全流程 · 从读题建模到可提交 PDF</text>
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="17" fill="#7C93B4">
+    <text x="80" y="230">Codex Plugin　·　11 个技能　·　14 套赛事 LaTeX 模板　·　90+ 科研绘图模板</text>
+  </g>
+  <rect x="80" y="252" width="132" height="3" rx="1.5" fill="url(#accent)"/>
+</svg>

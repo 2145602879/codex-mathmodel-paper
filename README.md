@@ -1,156 +1,205 @@
-# MathModel Paper Suite — 本地 Codex 插件
+<div align="center">
 
-从 MathModel desktop 0.0.22 安装包里提取的 10 个数模技能（原始 12 个中的 10 个，另 2 个见 `_parked/`），按 Codex 官方插件规范封装（`.codex-plugin/plugin.json` + `"skills": "./skills/"`），并新增一个端到端总编排技能，共 **11 个技能**。
+<img src="assets/banner.svg" alt="MathModel Paper Suite" width="100%">
 
-## 在其他设备安装
+# MathModel Paper Suite
 
-### 前置条件
+**数学建模竞赛论文全流程 Codex 插件 —— 从读题建模到可提交 PDF，一条流水线走完。**
 
-| 需要 | 说明 |
-|---|---|
-| Codex（桌面版或 CLI） | 需带 `plugin` 子命令（本插件在 `codex-cli 0.155.1` 上验证通过） |
-| 获取本仓库 | 两条路：**① git 克隆**（需仓库读取权限）或 **② 离线 zip**（无需 git、无需账号） |
-| （仅路线 ①）仓库读取权限 | **本仓库是私有的**：先 `gh auth login`，或让仓库所有者加你为 collaborator，或 fork 后自行决定可见性 |
+![version](https://img.shields.io/badge/version-1.0.2-4C8DFF)
+![skills](https://img.shields.io/badge/skills-11-22D3A6)
+![plugin](https://img.shields.io/badge/Codex-Plugin-6E56CF)
+![platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-6E86A8)
 
-### 安装步骤
+[快速安装](#快速安装3-步) · [使用示例](#使用示例) · [环境要求](#环境要求) · [常见问题](#常见问题) · [更新记录](#更新记录)
 
-**第 1 步：把仓库弄到本地。** 下文用 `<repo-root>` 指代那个目录，即**包含 `.agents/` 与 `plugins/` 的那一层**。
+</div>
+
+---
+
+## 这是什么
+
+一套给 **Codex** 用的数学建模竞赛论文生产线。装上之后，你把题目和数据交给它，它会按阶段把活干完：
+
+```
+读题建模  →  找数据  →  逐问求解  →  配图  →  写论文  →  查文献  →  编译 PDF  →  评委式评审
+```
+
+一共 **11 个技能**，各负责一环，由一个总编排技能串起来——你只需要说一句话，不用记住哪个技能叫什么。
+
+| 阶段 | 技能 | 干什么 |
+|---|---|---|
+| 🧭 总编排 | `mathmodel-paper-workflow` | 决定每一步调用谁，一路推进到交付 |
+| 📄 论文 | `mma-paper` | **14 套赛事 LaTeX 模板**（国赛 / 美赛 / 华为杯 / 统计建模 / 电工杯 …）+ 写作纪律 |
+| 🎨 配图 | `mma-figure` → `nature-figure-mma`、`mathmodel-figure-templates`、`paper-diagram` | 90+ 科研绘图模板、Nature 级数据图表、可编辑 draw.io 技术路线图 |
+| 📚 文献 | `paper-search` | 真实 DOI 反查生成 BibTeX，**杜绝编造参考文献**（免 API key） |
+| 📊 数据 | `data-search` | 找公开数据集、核验口径与许可、登记来源 |
+| ✅ 评审 | `mma-review` | 评委视角六维度打分，输出 `review.md` |
+| 🔧 环境 | `doctor` | 一键体检缺什么依赖，给出安装方案 |
+| 🧬 优化 | `metaheuristic-optimization` | PSO / GA / DE / GWO 等智能优化实验 |
+
+## 快速安装（3 步）
+
+**第 1 步 · 下载**
+
+到 [Releases](../../releases/latest) 下载 `codex-mathmodel-marketplace-1.0.2.zip`，解压到一个**新的空文件夹**（例如 `D:\codex-mathmodel`）。
+
+**第 2 步 · 两条命令**
+
+在**刚解压出来的那个文件夹**里执行：
 
 ```bash
-# 路线 ①：git 克隆
-git clone https://github.com/2145602879/codex-mathmodel-paper.git
-cd codex-mathmodel-paper
-# 没有 gh 时可用 PAT：
-# git clone https://<your-token>@github.com/2145602879/codex-mathmodel-paper.git
+codex plugin marketplace add .
+codex plugin add mathmodel-paper@mathmodel-local
 ```
 
-```text
-路线 ②：离线 zip
-把收到的 codex-mathmodel-marketplace-1.0.1.zip 解压到任意目录，
-该目录就是 <repo-root>（解压后应能看到 .agents\、plugins\、README.md）。
-```
+> Windows 的 PowerShell 用法完全相同。若提示找不到 `codex`，说明还没装 Codex CLI/桌面版。
 
-**第 2~4 步**（在 `<repo-root>` 目录下执行）：
+**第 3 步 · 重启 Codex，新开一个对话**，然后说：
 
-```bash
-# 2. 注册为 marketplace（市场名 mathmodel-local 来自目录内的 .agents/plugins/marketplace.json）
-codex plugin marketplace add "$PWD"
-#   PowerShell 同样写法：codex plugin marketplace add "$PWD"
+> 用国赛模板开始一篇数模论文
 
-# 3. 安装并启用插件
-codex plugin add "mathmodel-paper@mathmodel-local"
+就这一句，它会自己往下推进。
 
-# 4. 确认状态（应显示 installed, enabled）
-codex plugin list
-```
+> ⚠️ 第 3 步不能省：插件技能**只在新对话里加载**，旧对话看不到。
 
-**第 5 步：新开一个线程**（或重启 Codex）。插件的技能**只在新会话里被拾取**，之后直接说「用国赛模板开始一篇数模论文」即可触发总编排。
+<details>
+<summary><b>不想用命令行？也可以手工注册（点开）</b></summary>
 
-### 也可以手工注册
-
-跳过第 2 步，在 `~/.codex/config.toml`（Windows：`C:\Users\<you>\.codex\config.toml`）追加（Windows 路径用单引号）：
+在 `~/.codex/config.toml`（Windows：`C:\Users\<你>\.codex\config.toml`）里加上这两段：
 
 ```toml
 [marketplaces.mathmodel-local]
 source_type = "local"
-source = '<repo-root>'
+source = '刚才解压出来的目录'
 
 [plugins."mathmodel-paper@mathmodel-local"]
 enabled = true
 ```
 
-### 更新与卸载
+</details>
 
-Codex 会把插件**拷贝进缓存**（`~/.codex/plugins/cache/mathmodel-local/mathmodel-paper/<version>/`），所以 `git pull` 之后**必须重新执行 `codex plugin add`** 才会生效：
-
-```bash
-git pull
-codex plugin add "mathmodel-paper@mathmodel-local"    # 重新拷贝到缓存
-```
+<details>
+<summary><b>用 git 克隆而不是下载 zip（点开）</b></summary>
 
 ```bash
-codex plugin remove "mathmodel-paper@mathmodel-local"   # 卸载插件
-codex plugin marketplace remove mathmodel-local         # 移除 marketplace 注册
+git clone https://github.com/2145602879/codex-mathmodel-paper.git
+cd codex-mathmodel-paper
+codex plugin marketplace add .
+codex plugin add mathmodel-paper@mathmodel-local
 ```
 
-## 校验
+仓库是私有的：需要先 `gh auth login`，或让仓库所有者加你为 collaborator。
 
-```powershell
-# 官方校验器依赖 pyyaml，裸装 python 需先装：
-pip install pyyaml
-python "<plugin-creator>\scripts\validate_plugin.py" "<repo-root>\plugins\mathmodel-paper"
-```
+</details>
 
-> 本插件已按 `plugin-json-spec.md` 逐项自检通过：JSON 合法、`name`/`version`(严格 semver)/`description`/`author.name` 与 `interface` 必需字段齐全、无 `hooks`/`apps`/`mcpServers` 等未支持字段、无 `[TODO:]` 占位、`defaultPrompt` 3 条且均在 128 字内。
+## 使用示例
 
-## 包含的技能（11 个）
+装上以后，用大白话提需求就行：
 
-| 技能 | 作用 |
+| 你可以说 | 它会做 |
 |---|---|
-| `mathmodel-paper-workflow` | **入口**：端到端总编排 + 宿主适配说明 |
-| `mma-paper` | 14 套赛事 LaTeX 模板 + 论文写作纪律（123.8 MB） |
-| `mathmodel-figure-templates` | 90 个可复现科研绘图模板（Python） |
-| `nature-figure-mma` | Nature 级配图工作流（v2.0.0，Apache-2.0）。**宿主机已自带 `nature-figure` 时优先用宿主机的**，本副本用于目标机器没有时兜底；为免同名冲突已改名 |
-| `paper-diagram` | 可编辑 draw.io 技术路线图/框架图 |
-| `paper-search` | OpenAlex+Crossref → 真实 DOI BibTeX（仅标准库） |
-| `data-search` | 公开数据检索、核验与来源登记 |
-| `mma-figure` | 配图路由（分派给上面三个绘图技能） |
-| `mma-review` | 评委视角六维度评审 → `review.md` |
-| `metaheuristic-optimization` | MEALPY 智能优化实验 |
-| `doctor` | 环境体检与安装向导 |
-
-详见 `INVENTORY.md`（提取来源、依赖量化、许可证）。
+| 用国赛模板开始一篇数模论文 | 走完整流水线，最终产出 PDF |
+| 用华为杯模板，题目是…… | 换成对应赛事模板 |
+| 帮我找这道题需要的人口 / 气象数据 | 检索公开数据、核验来源并登记 |
+| 查一下 XX 方法的文献并生成 bib | 真实 DOI 反查，生成 BibTeX |
+| 给这篇论文配几张高级图 | 自动分派给合适的绘图技能 |
+| 按评委视角评审我的论文 | 输出 `review.md` 评分表与改法 |
+| 帮我检查环境缺什么 | 体检并给出安装命令 |
 
 ## 环境要求
 
-| 项 | 状态 | 说明 |
-|---|---|---|
-| Python 3.11 | 已装 | 但 site-packages 只有 pip/setuptools，**科学计算链缺失** |
-| matplotlib / numpy / scipy / pandas / seaborn / cartopy / shapely | **缺** | `pip install matplotlib numpy scipy pandas seaborn cartopy shapely pyyaml python-dateutil` |
-| LaTeX | **缺** | 建议启用官方 `latex@openai-bundled` 插件（自带 tectonic）；或装 TeX Live/MiKTeX（需含 ctex/xeCJK） |
-| drawio CLI | 缺 | `paper-diagram` 的导出脚本需要桌面版；缺失时用其模板路径手工导出 |
-| `paper-search` | ✅ 立即可用 | 仅用 Python 标准库 + 网络 |
+| 你的目标 | 需要准备 |
+|---|---|
+| 论文写作、文献检索、评审（纯文字） | 一个可用的 **Codex** 就够了 |
+| 要画图、跑求解程序 | **Python 3** + `pip install matplotlib numpy scipy pandas seaborn cartopy shapely pyyaml python-dateutil` |
+| 要编译出 PDF | **LaTeX**：推荐在 Codex 里装官方 `latex` 插件（自带 tectonic 引擎，免配置）；也可自装 TeX Live / MiKTeX（需含 ctex / xeCJK） |
 
-先跑 `doctor` 技能可以自动体检并给出补齐方案。
+不确定缺什么？让 Codex 跑一下 `doctor`，它会逐项体检并给出方案。
 
-## 未打包的技能（见 `_parked/`）
+## 常见问题
 
-- `skill-creator` —— Codex **自带** `~/.codex/skills/.system/skill-creator`（系统技能，任何装了 Codex 的机器都有），打包属重复。
-- `paper-sharing` —— **不建议使用**：设计上是「读完论文→自动删敏感信息→不询问用户→上传到数模广场」，且依赖厂商后端 MCP。
+<details>
+<summary><b>提示 No such command: plugin</b></summary>
 
-> `nature-figure` 已打包为 `nature-figure-mma`（见上表）。它与宿主机 `~/.codex/skills/nature-figure` 那份**不是同一版本**（那份 126 文件 / 33.5 MB，这份 100 文件 / 29.3 MB），属两个不同构建，所以打包并非冗余备份。
+Codex 版本较旧，先升级 Codex 再试。本插件在 `codex-cli 0.155.1` 上验证通过。
 
-## 许可证与字体（重要）
+</details>
 
-- 只有 `nature-figure-mma`（原 `nature-figure`）、`paper-diagram`、`skill-creator` 带 LICENSE（均 Apache-2.0）；其余技能目录**没有 LICENSE**，按默认「保留所有权利」理解：自用可以，公开再分发需谨慎。
-- `mma-paper` 的 123.8 MB 里约 **90 MB 是字体**，含**中易、方正的商业字体**（宋体/黑体/楷体/隶书/仿宋_GB2312/方正小标宋）。自用无妨，**不要公开再分发**；Ubuntu Mono / Fira Code / Monaco 为开源许可。
-- 完整的来源、许可证与字体风险说明见 [`NOTICE.md`](NOTICE.md)。
+<details>
+<summary><b>装完没反应，技能不触发</b></summary>
 
-## 远程仓库与更新
+**必须新开一个对话**。插件技能只在会话启动时加载，旧对话不会自动获得。
 
-远程已配置：`origin → https://github.com/2145602879/codex-mathmodel-paper`（**私有**）。后续更新：
+</details>
 
-```powershell
-cd <repo-root>
-git add -A
-git commit -m "更新说明"
-git push
+<details>
+<summary><b>我改了插件内容，怎么让它生效</b></summary>
+
+Codex 会把插件复制到缓存目录，所以改动后要重新安装一次：
+
+```bash
+codex plugin add mathmodel-paper@mathmodel-local
 ```
 
-换台机器：见上面「**在其他设备安装**」一节（克隆 → `codex plugin marketplace add` → `codex plugin add` → 新开线程）。注意本机改完推送后，**本机也要重新执行 `codex plugin add`** 才会刷新缓存。
+</details>
 
-> 仓库含约 90 MB 商业字体，**建议保持私有**；若要公开，请先删除 `plugins/mathmodel-paper/skills/mma-paper/assets/template/*/` 下的商业字体文件（`.gitignore` 中已预置排除规则，保留 `UbuntuMono-*`、`Fira Code`、`MONACO` 等开源字体）。
+<details>
+<summary><b>怎么卸载 / 怎么确认装好了</b></summary>
+
+```bash
+codex plugin list                                    # 应显示 installed, enabled
+codex plugin remove mathmodel-paper@mathmodel-local  # 卸载插件
+codex plugin marketplace remove mathmodel-local      # 移除市场注册
+```
+
+</details>
+
+<details>
+<summary><b>能出中文 PDF 吗</b></summary>
+
+可以。模板自带中文字体与字体接入约定，编译时按模板的 `fonts/` 方式引用，不会静默替换字体。
+
+</details>
+
+## 目录结构
+
+```
+.
+├── assets/banner.svg                      ← 页面横幅
+├── .agents/plugins/marketplace.json       ← 插件市场清单
+├── plugins/mathmodel-paper/
+│   ├── .codex-plugin/plugin.json          ← 插件清单（name / version / skills）
+│   ├── INVENTORY.md                       ← 技能清单与依赖说明
+│   └── skills/                            ← 11 个技能
+└── _parked/                               ← 未启用的技能（附原因说明）
+```
+
 ## 更新记录
 
-### v1.0.1 — 同步 MathModel 0.0.22
+### v1.0.2 — 展示与文档改版
 
-- 同步 `mma-paper/assets/template/huawei/`（华为杯模板）6 个文件：`gmcmthesis.cls`、`logo.pdf`、`title.pdf`、`main.tex`、`sections/A_code.tex`、`template.json`
-- 两版差异**仅**在华为杯模板：658 个文件中其余 652 个字节级完全相同，`claude.exe`（284,981,920 字节）亦未变
-- 变动性质：厂商重做该模板 —— 抬头改为 `2026/09/22 MathModel Huawei Cup 2026`、`cs4size`→`zihao=-4`、行距 1.38→1、字体改为 `\IfFontExistsTF{...}` 可降级（缺 Times/Courier/Arial/Consolas 时回退 TeX Gyre/Latin Modern）、封面标签改用随附隶书 `LiSu.ttf`、封面页码与 PDF 锚点修正、`logo.pdf` 重新导出（407 KB→113 KB）
-- 写入 **2026 竞赛规则要求**：摘要不超过两页、无需英文摘要；使用 AI 须声明工具名称/版本/机构/发布日期（`A_code.tex` 改用模板自带 `Python` 环境并要求程序开头保留声明）
+- README 重写为产品页：三步安装、使用示例、常见问题、目录结构，安装流程对新手友好
+- 新增页面横幅 `assets/banner.svg`
+- 修正插件清单中的作者 / 开发者字段
+
+### v1.0.1 — 华为杯模板升级到 2026 版
+
+- 华为杯（中国研究生数学建模竞赛）模板全面更新：
+  - 新增 **AI 使用声明**要求（程序开头保留工具名称 / 版本 / 机构 / 发布日期）
+  - 对齐 2026 规则：摘要不超过两页、无需英文摘要
+  - 字体改为**缺失自动回退**（Times / Courier / Arial / Consolas 不存在时回退开源等价字体），换机器不会再因字体编译失败
+  - 封面标签改用随附隶书字体；修正封面页码与 PDF 锚点重复；logo 重新导出（体积减少约 72%）
+- 文档同步更新
 
 ### v1.0.0 — 首次发布
 
-- 从 MathModel desktop 0.0.21 提取 10 个技能，另新增 `mathmodel-paper-workflow` 总编排，共 **11 个技能**
-- 去 Claude 化改造：移除 `allowed-tools`；`AskUserQuestion` → 普通文本提问；`browser_*` / `mcp__mathmodel-*` → Codex Browser 插件；`/skill` 斜杠调用 → 技能名调用
-- `nature-figure` 改名 `nature-figure-mma`，避免与宿主机同名技能冲突（宿主机有则优先用宿主机的）
+- 11 个技能打包为 Codex 插件，含端到端总编排 `mathmodel-paper-workflow`
+- 完成 Codex 宿主适配：交互提问改为普通文本提问；浏览器能力对接 Codex Browser 插件；移除若干专有工具依赖
+- `nature-figure-mma` 采用独立命名，避免与本机同名技能冲突（本机已有 `nature-figure` 时优先用本机那份）
+
+## 来源与许可
+
+本仓库包含第三方技能与字体资源。**来源、许可证状况与再分发限制见 [`NOTICE.md`](NOTICE.md) —— 使用前请务必阅读。**
+
+简要提示：仓库内含商业字体，**请勿公开再分发**；若确需公开，请先按 `.gitignore` 中预置的规则移除相关字体文件。
