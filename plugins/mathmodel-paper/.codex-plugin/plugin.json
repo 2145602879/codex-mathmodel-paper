@@ -22,7 +22,7 @@
   "interface": {
     "displayName": "MathModel Paper Suite",
     "shortDescription": "数模竞赛论文全流程：模板·配图·文献·评审",
-    "longDescription": "把数学建模竞赛论文从建模到交付串成一条流水线。入口用 mathmodel-paper-workflow 总编排：mma-paper 提供 14 套赛事 LaTeX 模板（CUMCM 国赛、MCM/APMCM 美赛、华为杯、华中、五邑、统计建模等）与写作纪律；mathmodel-figure-templates 提供 90 个可复现科研绘图模板；paper-diagram 产出可编辑的 draw.io 技术路线图/研究框架图；数据图表走 nature-figure；paper-search 用 OpenAlex+Crossref 生成真实 DOI 的 BibTeX，杜绝编造文献；data-search 检索并登记公开数据；mma-review 以竞赛评委视角按六维度打分输出 review.md。所有技能自带脚本与资产，不依赖原 App。",
+    "longDescription": "把数学建模竞赛论文从建模到交付串成一条流水线。入口用 mathmodel-paper-workflow 总编排：mma-paper 提供 14 套赛事 LaTeX 模板（CUMCM 国赛、MCM/APMCM 美赛、华为杯、华中、五邑、统计建模等）与写作纪律；mathmodel-figure-templates 提供 90 个可复现科研绘图模板；paper-diagram 产出可编辑的 draw.io 技术路线图/研究框架图；数据图表走 nature-figure（宿主机自带优先）/ nature-figure-mma（插件内置兜底）；paper-search 用 OpenAlex+Crossref 生成真实 DOI 的 BibTeX，杜绝编造文献；data-search 检索并登记公开数据；mma-review 以竞赛评委视角按六维度打分输出 review.md。所有技能自带脚本与资产，不依赖原 App。",
     "developerName": "MathModel (extracted)",
     "category": "Education & Research",
     "capabilities": [

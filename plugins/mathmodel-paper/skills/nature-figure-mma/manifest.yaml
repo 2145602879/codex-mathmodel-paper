@@ -1,4 +1,4 @@
-name: nature-figure
+name: nature-figure-mma
 version: 2.0.0
 description: >
   Declarative manifest for the static/dynamic split. SKILL.md uses this to

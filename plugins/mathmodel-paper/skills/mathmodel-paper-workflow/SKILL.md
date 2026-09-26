@@ -15,7 +15,7 @@ description: 数学建模竞赛论文端到端总编排（CUMCM 国赛、MCM/APM
 | 1 读题与建模 | `mma-paper`（FIRST STEP） | 模型选择、假设、逐问求解计划 |
 | 2 数据 | `data-search` | 候选来源 → 核验 → 落地文件 + 来源登记 |
 | 3 求解 | `mma-paper` | **每问一个独立 `.py`**，保存后运行，不要一次求解 |
-| 4 配图 | `mma-figure` 路由 → `nature-figure` / `mathmodel-figure-templates` / `paper-diagram` | `figures/` 下的图 + 可粘贴的 LaTeX 片段 |
+| 4 配图 | `mma-figure` 路由 → `nature-figure` / `nature-figure-mma` / `mathmodel-figure-templates` / `paper-diagram` | `figures/` 下的图 + 可粘贴的 LaTeX 片段 |
 | 5 写作与编译 | `mma-paper` | 论文 `.tex` → PDF |
 | 6 参考文献 | `paper-search` | 真实 DOI 反查生成的 `book.bib` |
 | 7 评审 | `mma-review` | `review.md`（六维度评分 + 按得分影响排序的改法） |
@@ -39,6 +39,7 @@ description: 数学建模竞赛论文端到端总编排（CUMCM 国赛、MCM/APM
 4. **`allowed-tools` 声明已移除**（Claude 专有 frontmatter）。
 5. **LaTeX**：优先用官方 `latex` 插件（bundled marketplace 里的 `latex@openai-bundled`，自带 tectonic 与 `latex-compile` / `latex-doctor` / `texlive-runtime-installer`）；也可用系统 TeX Live。
 6. **字体**：`mma-paper/assets/template/<赛事>/` 下自带中文字体（宋体/黑体/楷体/隶书等），按模板的 `fonts/` 约定接入，不要静默替换字体。
+7. **数据图表技能的优先级**：宿主机若已自带 `nature-figure`（用户级安装），**优先用宿主机的**；没有时才用本插件内置的 `nature-figure-mma`（MathModel 打包版 v2.0.0，与之不是同一构建）。两者接口一致，都是「先确定 Python 还是 R，再作图」。
 
 ## 交付前自检
 
