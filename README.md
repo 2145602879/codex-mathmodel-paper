@@ -198,6 +198,23 @@ codex plugin marketplace remove mathmodel-local      # 移除市场注册
 </details>
 
 <details>
+<summary><b>终端里提示找不到 codex 命令</b></summary>
+
+说明 Codex CLI 不在 PATH 里。三种解法，挑一个：
+
+**① 一键脚本（最省事）**：双击运行本仓库的 `scripts\add-codex-to-path.cmd`。它会自动找到 Codex 安装目录、加进「用户 PATH」（只改用户级、不碰系统 PATH、已存在会跳过），然后**重开一个终端**即可。
+
+**② 用 npm 装一份 CLI**（需要 Node.js）：`npm i -g @openai/codex` —— 装到的目录通常已在 PATH 里，不用手改。
+
+**③ 手动加 PATH**：按 `Win` → 输入"环境变量" → 选「**编辑账户的环境变量**」→ 在上半部分「用户变量」里选中 `Path` → 「编辑」→ 「新建」→ 粘贴 Codex 的安装目录 → 一路「确定」→ **关掉所有终端重开**。
+
+> 目录怎么找：打开 `C:\Users\<你>\.codex\config.toml`，搜 `CODEX_CLI_PATH`，把结尾的 `codex.exe` 去掉就是。形如 `C:\Users\<你>\AppData\Local\OpenAI\Codex\bin\<一串哈希>`——注意那串哈希每台机器都不同，不能照抄。
+>
+> ⚠️ 别用 `setx PATH "%PATH%;目录"`：它会把系统 PATH 与用户 PATH 合并写进用户 PATH，且超过 1024 字符会被截断，可能弄坏原有 PATH。
+
+</details>
+
+<details>
 <summary><b>能出中文 PDF 吗</b></summary>
 
 可以。模板自带中文字体与字体接入约定，编译时按模板的 `fonts/` 方式引用，不会静默替换字体。
@@ -214,6 +231,9 @@ codex plugin marketplace remove mathmodel-local      # 移除市场注册
 │   ├── .codex-plugin/plugin.json          ← 插件清单（name / version / skills）
 │   ├── INVENTORY.md                       ← 技能清单与依赖说明
 │   └── skills/                            ← 11 个技能
+├── scripts/
+│   ├── add-codex-to-path.ps1              ← 提示找不到 codex 命令时，一键加入用户 PATH
+│   └── add-codex-to-path.cmd              ← 上面那个的双击版
 └── _parked/                               ← 未启用的技能（附原因说明）
 ```
 
