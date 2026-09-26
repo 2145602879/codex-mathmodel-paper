@@ -1,7 +1,7 @@
 {
   "name": "mathmodel-local",
   "interface": {
-    "displayName": "MathModel Paper Suite"
+    "displayName": "MathModel Local"
   },
   "plugins": [
     {
